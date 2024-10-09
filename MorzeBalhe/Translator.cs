@@ -30,27 +30,22 @@ public class Translator(Configuration configuration){
 
                     if(isSilent) continue;
                     Console.Write(convertedChar);
-                    if(beep == ' ') Thread.Sleep(500);
-                    else if(beep == '.') Console.Beep(1000, 200);
-                    else if(beep == '-') Console.Beep(1000, 500);
+                    if(beep == ' ')Thread.Sleep(500);
+                    else if(beep == '.')Console.Beep(1000, 200);
+                    else if(beep == '-')Console.Beep(1000, 500);
                 }
                 
                 result.Append(convertedLetter);
                 result.Append(' ');
-                if(!isSilent) Console.Write(" ");
+                if(!isSilent)Console.Write(" ");
             }else{
                 isHasWrongCharacter = true;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(VARIABLE);
-                Console.Write(" ");
-                Console.ForegroundColor = ConsoleColor.White;
+                textColorChangeToRed(VARIABLE + " ");
             }
         }
         
         if(isHasWrongCharacter){
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("\nNem minden karaktert sikerült átfordítanunk.");
-            Console.ForegroundColor = ConsoleColor.White;
+            textColorChangeToRed("\nNem minden karaktert sikerült átfordítanunk.");
         }
     
         return result.ToString().TrimEnd();
@@ -65,43 +60,44 @@ public class Translator(Configuration configuration){
         foreach(char character in morseCode){
             if(character == _spaceCharacter){
                 result.Append(" ");
-                if(isSilent) continue;
+                if(isSilent)continue;
                 Console.Write(" ");
                 Thread.Sleep(500);
             }else if(character == _longCharacter){
                 currentMorse += "-";
-                if(!isSilent) Console.Beep(1000, 500);
+                if(!isSilent)Console.Beep(1000, 500);
             }else if(character == _shortCharacter){
                 currentMorse += ".";
-                if(!isSilent) Console.Beep(1000, 200);
+                if(!isSilent)Console.Beep(1000, 200);
             }else if(character == ' '){
                 key = _morzeAbcDictionary.FirstOrDefault(x => x.Value == currentMorse).Key;
                 if(key != null){
                     result.Append(key);
-                    if(!isSilent) Console.Write(key);
+                    if(!isSilent)Console.Write(key);
                 }
                 currentMorse = "";
             }else{
                 isHasWrongCharacter = true;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(character);
-                Console.ForegroundColor = ConsoleColor.White;
+                textColorChangeToRed(character + "");
             }
         }
         
         key = _morzeAbcDictionary.FirstOrDefault(x => x.Value == currentMorse).Key;
         if(key != null){
             result.Append(key);
-            if(!isSilent) Console.Write(key);
+            if(!isSilent)Console.Write(key);
         }
 
         if(isHasWrongCharacter){
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("\nNem minden karaktert sikerült dekódolnunk.");
-            Console.ForegroundColor = ConsoleColor.White;
+            textColorChangeToRed("\nNem minden karaktert sikerült dekódolnunk.");
         }
         
         return result.ToString();
     }
     
+    private static void textColorChangeToRed(String value){
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.Write(value);
+        Console.ForegroundColor = ConsoleColor.White;
+    }
 }

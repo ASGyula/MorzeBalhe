@@ -9,7 +9,7 @@ public class Configuration{
     public char LongCharacter{get;set;}
     public Dictionary<char, String> MorseCodeDictionary{get;set;}
 
-    public static Configuration? LoadFromFile(String path){
+    public static Configuration? loadFromFile(String path){
         if(!File.Exists(path)){
             Console.WriteLine("Nem található konfigurációs fájl. A kilépéshez nyomj le egy billentyűt.");
             Console.ReadKey();
